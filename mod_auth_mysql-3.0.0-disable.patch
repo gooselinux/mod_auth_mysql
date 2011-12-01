@@ -1,0 +1,11 @@
+--- mod_auth_mysql-3.0.0/mod_auth_mysql.c.disable
++++ mod_auth_mysql-3.0.0/mod_auth_mysql.c
+@@ -186,7 +186,7 @@
+ #ifdef ENABLE				/* If we are to be enabled */
+   #define _ENABLE ENABLE
+ #else
+-  #define _ENABLE 1			/* Assume we are */
++  #define _ENABLE 0			/* Assume we are not */
+ #endif
+ 
+ #ifdef CHARACTERSET

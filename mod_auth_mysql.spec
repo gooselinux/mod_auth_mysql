@@ -1,7 +1,7 @@
 Summary: Basic authentication for the Apache web server using a MySQL database
 Name: mod_auth_mysql
 Version: 3.0.0
-Release: 11%{?dist}
+Release: 11%{?dist}.1
 Epoch: 1
 Group: System Environment/Daemons
 URL: http://modauthmysql.sourceforge.net/
@@ -9,6 +9,7 @@ Source0: http://downloads.sourceforge.net/modauthmysql/mod_auth_mysql-%{version}
 Source1: auth_mysql.conf
 Patch0: mod_auth_mysql-3.0.0-apr1x.patch
 Patch1: mod_auth_mysql-3.0.0-disable.patch
+Patch10: mod_auth_mysql-3.0.0-CVE-2008-2384.patch
 License: ASL 1.1
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: httpd-devel, mysql-devel
@@ -22,6 +23,8 @@ web server by checking data in a MySQL database.
 %setup -q
 %patch0 -p1 -b .apr1x
 %patch1 -p1 -b .disable
+
+%patch10 -p1 -b .cve2384
 
 %build
 %{_sbindir}/apxs -I%{_includedir}/mysql -Wc,-Wall -Wc,-Werror \
@@ -50,6 +53,9 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/*.conf
 
 %changelog
+* Thu Dec 16 2010 Joe Orton <jorton@redhat.com> - 1:3.0.0-11.1
+- add security fix for CVE-2008-2384 (#663617)
+
 * Sat Jun 19 2010 Joe Orton <jorton@redhat.com> - 1:3.0.0-11
 - less noise for httpd-mmn BR; package the LICENSE (#605950)
 
